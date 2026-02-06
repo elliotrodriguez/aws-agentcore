@@ -4,15 +4,10 @@ from classes.aws_client_factory import AwsClientFactory
 
 config = dotenv_values(".env")
 
-session = boto3.Session(profile_name=config['AWS_PROFILE'])
-sts = session.client('sts')
-get_temp_creds = sts.assume_role(RoleArn=config['AWS_ROLE_ARN'], RoleSessionName='AgentCorePOC_Role')
-
-temp_creds = get_temp_creds['Credentials']
-
-assumeRoleClient = AwsClientFactory().create_client('sts', temp_creds)
-bedrockClient = AwsClientFactory().create_client('bedrock', temp_creds)
-bedrockRuntimeClient = AwsClientFactory().create_client('bedrock-runtime', temp_creds)
+factory = AwsClientFactory()
+assumeRoleClient = factory.create_client('sts')
+bedrockClient = factory.create_client('bedrock')
+bedrockRuntimeClient = factory.create_client('bedrock-runtime')
 
 user_message = "Who won the AL batting title in 1983?"
 
