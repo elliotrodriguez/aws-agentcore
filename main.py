@@ -24,7 +24,7 @@ conversation = [
 ]
 
 response = bedrockRuntimeClient.converse(
-    modelId="amazon.nova-lite-v1:0",
+    modelId=config["MODEL_ID"],
     messages=conversation,
     inferenceConfig={"maxTokens": 300, "temperature": 0.5, "topP": 0.9}
 )
